@@ -1,4 +1,3 @@
 # trunk-based-dev
 # Arguments
-- release: Set the release branch name or tags
-- prod_release: set the prod release prefix or tags
+- create-release: create new release from latest one by cherry-pick certain commits.

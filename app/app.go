@@ -1,7 +1,7 @@
 package app
 
 import (
-	"fmt"
+	"io/fs"
 	"os"
 
 	"gopkg.in/yaml.v2"
@@ -39,9 +39,7 @@ func (app *AppConfig) Save(releaseName string, rcName string) error {
 	if err != nil {
 		return err
 	}
-
-	fmt.Println(string(data[:]))
-	err = os.WriteFile(FILE_PATH, data, 0)
+	err = os.WriteFile(FILE_PATH, data, fs.ModeAppend)
 	if err != nil {
 		return err
 	}
@@ -54,7 +52,7 @@ func (app *AppConfig) init() {
 	if err != nil {
 		f, err = os.Create(FILE_PATH)
 		if err != nil {
-			fmt.Println("")
+			panic(err)
 		}
 	}
 	defer f.Close()
@@ -63,7 +61,8 @@ func (app *AppConfig) init() {
 	decoder := yaml.NewDecoder(f)
 	err = decoder.Decode(&cfg)
 	if err != nil {
-		fmt.Println("")
+		app.Config = Config{}
+	} else {
+		app.Config = cfg
 	}
-	app.Config = cfg
 }

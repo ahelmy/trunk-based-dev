@@ -11,13 +11,14 @@ import (
 func Execute() {
 	rootCmd := &cobra.Command{
 		Use:   "trunk",
-		Short: "Your app description",
-		Long:  "Your app long description",
+		Short: "Trunk based development tool",
+		Long:  "Create release in seconds!",
 	}
 	if app.App.IsEmpty() {
-		fmt.Println("You need to config it first!")
+		fmt.Println("No configuration found!")
 		Init()
 	}
+
 	rootCmd.AddCommand(ConfigCmd())
 	rootCmd.AddCommand(CreateReleaseCmd())
 
